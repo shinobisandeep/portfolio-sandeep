@@ -26,7 +26,7 @@ const storage= multer.diskStorage({
   }
 })
 
-router.post("",checkAuth,
+router.post("",
 multer({storage: storage}).single("image"),(req, res, next)=>{
   const url= req.protocol + '://' + req.get("host");
   const post = new Post({
