@@ -52,7 +52,7 @@ constructor(public postService: PostService,public route:ActivatedRoute){
               {title:this.posts.title,content:this.posts.content,image:this.posts.imagePath});
           });
 
-          console.log(this.form.value);
+
        } else{
          this.mode='create';
          this.postId= null;
@@ -85,7 +85,7 @@ constructor(public postService: PostService,public route:ActivatedRoute){
       this.form.value.title,this.form.value.content,this.form.value.image);
     }
       else{
-        console.log("ssdd",this.form);
+
 
         this.postService.updatePost(this.postId,this.form.value.title
           ,this.form.value.content,
