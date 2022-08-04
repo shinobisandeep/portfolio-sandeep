@@ -26,7 +26,7 @@ const storage= multer.diskStorage({
   }
 })
 
-router.post("",checkAuth,
+router.post("",
 multer({storage: storage}).single("image"),(req, res, next)=>{
   const url= req.protocol + '://' + req.get("host");
   const post = new Post({
@@ -35,7 +35,7 @@ multer({storage: storage}).single("image"),(req, res, next)=>{
     imagePath: url + "/images/" + req.file.filename
   });
   post.save().then(createdPost=>{
-    console.log(createdPost);
+
     res.status(201).json({
       message: 'Post added successfully',
       post:{
@@ -55,7 +55,7 @@ router.get('',(req,res, next)=> {
     const currentPage= parseInt(req.query.page);
     const postQuery= Post.find();
     let fetchedPosts;
-    console.log(req.query.pageSize);
+
     if(pageSize && currentPage){
       postQuery.skip(pageSize * (currentPage - 1))
       .limit(pageSize);
@@ -64,18 +64,18 @@ router.get('',(req,res, next)=> {
     .then(documents=>{
       fetchedPosts=documents;
       x=Post.count
-      console.log("sandeep12",x);
+
       return Post.count();
 
     })
     .then(count=>{
-      console.log("heelo",count)
+
       res.status(200).json({
         message: 'Post Fetch Successfully',
         posts:fetchedPosts,
         maxPosts: count
       });
-      console.log("bye",this.maxedPosts)
+
     });}
     catch(error){
       console.log(error);
