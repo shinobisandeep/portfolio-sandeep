@@ -24,7 +24,7 @@ export class PostCreateComponent implements OnInit{
  isLoading= false;
 
 constructor(public postService: PostService,public route:ActivatedRoute){
- this.posts={id:'',title:'',content:'',image:new File([""], "dummy", {}),imagePath:''};
+ this.posts={id:'',title:'',content:'',image:new File([""], "dummy", {}),creator:"",imagePath:''};
 }
  ngOnInit() {
     this.form =new FormGroup({
@@ -46,7 +46,8 @@ constructor(public postService: PostService,public route:ActivatedRoute){
               title:postData.title,
               content:postData.content,
               image: postData.image,
-              imagePath: postData.imagePath
+              imagePath: postData.imagePath,
+              creator: postData.creator
             };
             this.form.setValue(
               {title:this.posts.title,content:this.posts.content,image:this.posts.imagePath});

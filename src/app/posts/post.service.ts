@@ -27,7 +27,8 @@ constructor(private http: HttpClient, private router:Router){
           title: post.title,
           content: post.content,
           id: post._id,
-          imagePath: post.imagePath
+          imagePath: post.imagePath,
+          creator: post.creator
         };
       }),
       maxPosts:postData.maxPosts
@@ -35,6 +36,7 @@ constructor(private http: HttpClient, private router:Router){
     })
     )
    .subscribe((transformedPostsData)=>{
+
     this.posts= transformedPostsData.posts;
     this.postUpdated.next({
       posts:[...this.posts],
@@ -54,7 +56,7 @@ constructor(private http: HttpClient, private router:Router){
   //  return t?t:post;
 
  let x=this.http.get<
-  {_id:string; title: string; content: string; image:File; imagePath:string}>
+  {_id:string; title: string; content: string; image:File; imagePath:string,creator:string}>
   ("http://localhost:3000/api/posts/"+ id);
 
   return x;
@@ -91,7 +93,8 @@ constructor(private http: HttpClient, private router:Router){
      postData= {
       id: id, title: title,
       content: content, imagePath: image,
-      image: image
+      image: image,
+      creator:""
     };
 
   }
