@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
+import { error } from "@angular/compiler/src/util";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { listeners } from "process";
 import { Subject } from "rxjs";
 import { AuthData } from "./auth-data.model";
 
@@ -32,11 +34,13 @@ export class AuthService{
 
  createUser(email:string, password:string){
   const authData:AuthData= {email: email, password: password};
- this.http.post("http://localhost:3000/api/user/signup",authData)
- .subscribe(response => {
+ return this.http.post("http://localhost:3000/api/user/signup",authData).subscribe(
+  ()=>{
+    this.router.navigate(["/"]);
+  },error=>{
+    this.authStatusListener.next(false);
+  });
 
-  this.router.navigate(["/login"]);
- });
  }
 
 
@@ -58,8 +62,9 @@ export class AuthService{
       this.router.navigate(["/"]);
       }
 
-    }
-  );
+    },error => {
+      this.authStatusListener.next(false);
+    });
  }
 
  autoAuthUser(){
@@ -91,7 +96,7 @@ export class AuthService{
 
 
  private setAuthTimer(duration: number){
-  console.log("Setting timer" + duration);
+
   this.tokenTimer=setTimeout(()=>{
     this.logout();
   },duration * 1000)

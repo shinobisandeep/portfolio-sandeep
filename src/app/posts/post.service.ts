@@ -36,7 +36,7 @@ constructor(private http: HttpClient, private router:Router){
     })
     )
    .subscribe((transformedPostsData)=>{
-    console.log(transformedPostsData);
+
     this.posts= transformedPostsData.posts;
     this.postUpdated.next({
       posts:[...this.posts],
