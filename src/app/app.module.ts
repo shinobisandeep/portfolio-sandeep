@@ -18,10 +18,13 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from "@angular/material/dialog";
 import { PostService } from './posts/post.service';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     HeaderComponent,
     PostListComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -48,12 +52,15 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
 
 
 
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true},PostService],
-  bootstrap: [AppComponent]
+  providers: [{provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass:ErrorInterceptor, multi: true},PostService],
+  bootstrap: [AppComponent],
+  entryComponents:[ErrorComponent]
 })
 export class AppModule { }

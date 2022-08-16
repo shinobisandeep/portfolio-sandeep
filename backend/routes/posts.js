@@ -46,6 +46,11 @@ multer({storage: storage}).single("image"),(req, res, next)=>{
 
       }
     });
+  })
+  .catch(error =>{
+    res.status(500).json({
+      message:"creating a post failed"
+    })
   });
 
 });
@@ -80,7 +85,9 @@ router.get('',(req,res, next)=> {
 
     });}
     catch(error){
-      console.log(error);
+     res.status(500).json({
+      message:"Couldn't fetch the Post "
+     });
     }
 
 
@@ -118,7 +125,9 @@ try {
     }
   });
 } catch (error) {
-  console.log(error);
+ res.status(500).json({
+  message:"Couldn't update post!"
+ });
 }
 
 });
@@ -134,6 +143,10 @@ router.get("/:id", (req, res, next)=>
     else{
       res.status(404).json({message:'Post not Found'});
     }
+  }). catch(error=>{
+    res.status(500).json({
+      message:"Couldn't fetch the Post by ID "
+     });
   })
 });
 
@@ -147,7 +160,12 @@ router.delete("/:id",checkAuth,
   res.status(401).json({message: 'Not Authorized!'});
   }
 
- });
+ })
+ .catch(error=>{
+  res.status(500).json({
+    message:"Couldn't delete the Post "
+   });
+  });
 });
 
 module.exports= router;
