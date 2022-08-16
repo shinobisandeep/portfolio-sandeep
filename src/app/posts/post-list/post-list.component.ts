@@ -61,7 +61,9 @@ onChangePage(pageData:PageEvent){
  onDelete(postId: any){
   this.isLoading= true;
  this.postService.deletePost(postId).subscribe(()=>{
-  this.postService.getPosts(this.postPerPage,this.currentPage)
+  this.postService.getPosts(this.postPerPage,this.currentPage);
+ },()=>{
+  this.isLoading=false;
  });
 
  }
