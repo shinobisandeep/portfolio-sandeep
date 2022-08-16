@@ -11,7 +11,8 @@ const userRoutes= require('./routes/user')
 const postRoutes= require('./routes/posts');
 const checkAuth = require("./middleware/check-auth");
 
-mongoose.connect(`mongodb+srv://${username}:D1sOjDYYiYgUWbhN@cluster0.fbgglgi.mongodb.net/node-angular?retryWrites=true&w=majority`
+mongoose.connect(`mongodb+srv://${username}:` +
+process.env.MONGO_ATLAS_PW+"@cluster0.fbgglgi.mongodb.net/node-angular?retryWrites=true&w=majority"
 ).then(()=>{
   console.log('Connected to database!');
 })
